@@ -25,26 +25,26 @@ function App() {
          
 {/* <UserInfo></UserInfo> */}
       
-        {/* <Navbar></Navbar>  */}
-      {/* <div style={footerStyle}>  */}
+        <Navbar></Navbar>  
+      <div style={footerStyle}> 
       <Routes>
-         {/* <Route exact path="/" element={<Home/>}></Route>
+          <Route exact path="/" element={<Home/>}></Route>
       <Route exact path="/services" element={<Services/>}>  </Route>
       <Route exact path="/about" element={<About/>}>  </Route>
         <Route exact path="/login" element={<Login/>}>  </Route>
         <Route exact path="/loginc" element={<LoginClient/>}>  </Route>
-        <Route  exact path="/SignUp" element={<Sign_up/>}></Route>   */}
+        <Route  exact path="/SignUp" element={<Sign_up/>}></Route>   
 
-<Route exact path="/" element={<Create/>}>  </Route>
+{/* <Route exact path="/" element={<Create/>}>  </Route>
 <Route exact path="/read" element={<Read/>}>  </Route>
-<Route exact path="/update" element={<Update/>}>  </Route>
+<Route exact path="/update" element={<Update/>}>  </Route> */}
 
 
 
         
       </Routes>
-       {/* </div>
-       <Footer></Footer>   */}
+        </div>
+       <Footer></Footer>  
 
       </>
   );

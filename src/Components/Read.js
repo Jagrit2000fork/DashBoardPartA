@@ -26,7 +26,7 @@ const Read = () => {
   };
   function getData()
   {
-    axios.get('https://63ebe45f32a081172393adeb.mockapi.io/crud-youtube')
+    axios.get('https://63ebe45f32a081172393adeb.mockapi.io/dashboard-client-info')
     .then((res)=>{
       //console.log(res);
       setData(res.data);
@@ -34,16 +34,21 @@ const Read = () => {
   }
   function handleDelete(id)
   {
-    axios.delete(`https://63ebe45f32a081172393adeb.mockapi.io/crud-youtube/${id}`).then(()=>{
+    axios.delete(`https://63ebe45f32a081172393adeb.mockapi.io/dashboard-client-info/${id}`).then(()=>{
             getData();
            });
   }
-  function setToLocalStorage(id,name,email,phone)
+  function setToLocalStorage(id,firstname,lastname,email,phone,city,state,address,company)
   {
       localStorage.setItem("id",id);
-      localStorage.setItem("name",name);
+      localStorage.setItem("firstname",firstname);
+      localStorage.setItem("lastname",lastname);
       localStorage.setItem("email",email);
       localStorage.setItem("phone",phone);
+      localStorage.setItem("city",city);
+      localStorage.setItem("state",state);
+      localStorage.setItem("address",address);
+      localStorage.setItem("company",company);
   }
    useEffect(()=>{
     getData();
@@ -93,11 +98,15 @@ const Read = () => {
   <thead>
     <tr>
       <th scope="col">Client_id</th>
-      <th scope="col">Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
       <th scope="col">Email Id</th>
       <th scope="col">Phone</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col">Address</th>
+      <th scope="col">Company</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   {
@@ -111,20 +120,26 @@ const Read = () => {
      {open[eachData.id]? <FaAngleDoubleUp /> : <FaAngleDoubleDown />}
      </span>
      </th>
-     <td>{eachData.name}</td>
+     <td>{eachData.firstname}</td>
+     <td>{eachData.lastname}</td>
      <td>{eachData.email}</td>
      <td>{eachData.phone}</td>
+     <td>{eachData.city}</td>
+     <td>{eachData.state}</td>
+     <td>{eachData.address}</td>
+     <td>{eachData.company}</td>
      <td>
         <Link to="/update">
         <FaUserEdit size={20} className='black-color' onClick={
             ()=>{
-                setToLocalStorage(eachData.id,eachData.name,eachData.email,eachData.phone);
+                setToLocalStorage(eachData.id,eachData.firstname,eachData.lastname,eachData.email,eachData.phone,eachData.city,eachData.state,eachData.address,eachData.company);
             }
         }></FaUserEdit>
         </Link>
-</td>
-
-     <td>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        
       <Link>
       <FaBan size={20} className='black-color' onClick={
         ()=>{
@@ -146,7 +161,7 @@ const Read = () => {
 													<th>Account ID</th>	
 													<th>ModelAPLId</th>
                           <th>Investment Amount</th>
-													<th>Edit</th>
+													<th>Action</th>
 				 </tr>
          </thead>
          <tbody>
@@ -184,7 +199,7 @@ const Read = () => {
 													</td>
           </tr>
             {/* Modal Code starting Here */}
- <FaPlus size={30} className=".black-color plus my-2" data-bs-toggle="modal" data-bs-target={`#example${eachData.id}`
+ <FaPlus size={20} className=".black-color plus my-2" data-bs-toggle="modal" data-bs-target={`#example${eachData.id}`
 }/>
 <div className="modal fade" id={`example${eachData.id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   {console.log(eachData.id+"yaha")}
