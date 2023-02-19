@@ -41,7 +41,7 @@ const Create = () => {
         />
       </div>
       <div className="form-group mb-2 my-4">
-        <input type="email" placeholder='Email' className='form-control'
+        <input type="email" placeholder='Email' className='form-control client-create-email'
         name='email'
         onChange={(e)=>{
           setEmail(e.target.value);

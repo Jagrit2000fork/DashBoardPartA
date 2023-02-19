@@ -35,7 +35,7 @@ const Update = () => {
       <h4 className='mb-3 text-center'>Update Client Information</h4>
       <form action="">
       <div className="form-group mb-2 my-4">
-        <input type="text" value={name} className='form-control'
+        <input type="text" value={name} className='form-control' placeholder='Client Name'
         name="name"
         onChange={(e)=>{
             setName(e.target.value);
@@ -44,7 +44,7 @@ const Update = () => {
         />
       </div>
       <div className="form-group mb-2 my-4">
-        <input type="email" placeholder='Email' className='form-control'
+        <input type="email" placeholder='Email' className='form-control client-create-email'
         name='email' value={email}
         onChange={(e)=>{
           setEmail(e.target.value);

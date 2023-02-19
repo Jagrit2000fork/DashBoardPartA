@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import axios from 'axios';
 import './Read.css';
 import { Link } from 'react-router-dom';
@@ -7,13 +7,20 @@ import { FaAngleDoubleUp } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import {FaBan} from "react-icons/fa";
 import {FaUserPlus} from "react-icons/fa";
-import {FaDonate} from "react-icons/fa";
+import user from '../img/user.png';
+import inbox from '../img/envelope.png';
+import settings from '../img/settings.png';
+import logout from '../img/log-out.png';
+import id from '../img/id.png';
+import {FaPlus} from "react-icons/fa";
 //import { FaArrowCircleDown } from "react-icons/fa";
 // data-bs-toggle="collapse" className='accordian-toggle' data-bs-target="#r2"
 const Read = () => {
   const [data,setData] = useState([]);
   //const [open, setOpen] =useState(false);
   const [open, setOpen] = useState({});
+  const [openDrop, setOpenDrop] = useState(false);
+  let menuRef = useRef();
   const handleClick = (id) => {
     setOpen((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
@@ -40,15 +47,47 @@ const Read = () => {
   }
    useEffect(()=>{
     getData();
-   },[]);
+    let handler = (e)=>{
+      if(!menuRef.current.contains(e.target)){
+        setOpenDrop(false);
+        console.log(menuRef.current);
+      }      
+    };
+
+    document.addEventListener("mousedown", handler);
+    return() =>{
+      document.removeEventListener("mousedown", handler);
+    }
+  },[]);
   return (
     <>
       <div className='d-flex justify-content-between m-3'>
-      <h2>Client List</h2>
+      {/* <h2>Client List</h2> */}
+
+      <div className='Add-icon'>
       <Link to="/">
-      <button type="submit" className="btn btn-primary"
-      ><FaUserPlus></FaUserPlus> Add Client</button>
+      <FaUserPlus size={20} className='black-color'></FaUserPlus>
       </Link>
+      </div>
+      <div className="dash-heading">
+        <h2>Advisor DashBoard</h2>
+      </div>
+      <div className="menu-container" ref={menuRef}>
+        <div className="menu-trigger" onClick={()=>{setOpenDrop(!openDrop)}}>
+        <img src={user} className="rounded-circle avatar" alt="avatar" />
+        </div>
+        <div className={`dropdown-menu-avatar ${openDrop? 'active' : 'inactive'}`}>
+        <h3>The Kiet<br/><span>Website Designer</span></h3>
+        <ul>
+        <DropdownItem img = {user} text = {"Name"}/>
+        <DropdownItem img = {id} text = {"Id"}/>
+        <DropdownItem img = {inbox} text = {"Email"}/>
+        <DropdownItem img = {settings} text = {"Change Password"}/>
+        <DropdownItem img = {logout} text = {"Logout"}/>
+        </ul>
+        </div>
+      </div>
+      
       </div>
       <table className="table accordian content-table table-striped">
   <thead>
@@ -77,25 +116,21 @@ const Read = () => {
      <td>{eachData.phone}</td>
      <td>
         <Link to="/update">
-        <button className='btn btn-primary'>
-        <FaUserEdit onClick={
+        <FaUserEdit size={20} className='black-color' onClick={
             ()=>{
                 setToLocalStorage(eachData.id,eachData.name,eachData.email,eachData.phone);
             }
         }></FaUserEdit>
-        </button>
         </Link>
 </td>
 
      <td>
       <Link>
-      <button className='btn btn-primary'>
-      <FaBan onClick={
+      <FaBan size={20} className='black-color' onClick={
         ()=>{
             handleDelete(eachData.id);
         }
      }></FaBan>
-     </button>
      </Link>
      </td>
   </tr>
@@ -123,9 +158,7 @@ const Read = () => {
 													<td> Lorem</td>
                           <td>U$8.00000 </td>
 													<td> 
-														<button className="btn btn-primary">
-                            <FaUserEdit/>
-															</button>
+                            <FaUserEdit size={20} className='black-color'/>
 													</td>
           </tr>
           <tr>
@@ -136,9 +169,7 @@ const Read = () => {
 													<td> Lorem</td>
                           <td>U$8.00000 </td>
 													<td> 
-                          <button className="btn btn-primary">
-                            <FaUserEdit/>
-															</button>
+                          <FaUserEdit size={20} className='black-color'/>
 													</td>
           </tr>
           <tr>
@@ -149,15 +180,12 @@ const Read = () => {
 													<td> Lorem</td>
                           <td>U$8.00000 </td>
 													<td> 
-                          <button className="btn btn-primary">
-                            <FaUserEdit/>
-															</button>
+                          <FaUserEdit size={20} className='black-color'/>
 													</td>
           </tr>
             {/* Modal Code starting Here */}
-            <button type="button" className="btn btn-dark my-2 modal-btn text-center" data-bs-toggle="modal" data-bs-target={`#example${eachData.id}`}>
-Add Investment <FaDonate size={30}/>
-</button>
+ <FaPlus size={30} className=".black-color plus my-2" data-bs-toggle="modal" data-bs-target={`#example${eachData.id}`
+}/>
 <div className="modal fade" id={`example${eachData.id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   {console.log(eachData.id+"yaha")}
   <div className="modal-dialog">
@@ -215,6 +243,14 @@ Add Investment <FaDonate size={30}/>
 </table>
 </>
 )
+}
+function DropdownItem(props){
+  return(
+    <li className = 'dropdownItem'>
+      <img src={props.img} alt="tasveer"></img>
+      <a href='/'> {props.text} </a>
+    </li>
+  );
 }
 export default Read;
 
